@@ -4,7 +4,7 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<AssemblyName>gnuciDictionary</AssemblyName>
 		<RootNamespace>gnuciDictionary</RootNamespace>
-		<Version>0.0.2</Version>
+		<Version>0.0.3</Version>
 		<Authors>cowtrix</Authors>
 		<Product />
 		<Description>A nuget port of the GNU Collaborative International Dictionary of English</Description>
