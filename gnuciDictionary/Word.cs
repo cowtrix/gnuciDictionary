@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Dictionary
+namespace gnucide
 {
 	public class Word
 	{
@@ -17,11 +17,11 @@ namespace Dictionary
 		}
 
 		[JsonProperty]
-		public string Value { get; }
+		public string Value { get; set; }
 		[JsonProperty]
-		public string Definition { get; }
+		public string Definition { get; set; }
 		[JsonProperty]
-		public string Plural { get; }
+		public string Plural { get; set; }
 
 		public override string ToString() => $"{Value}: {Definition}";
 	}
