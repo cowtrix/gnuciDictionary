@@ -1,8 +1,11 @@
 ﻿using Common;
 using Common.Extensions;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -12,7 +15,7 @@ namespace gnuciDictionary
 {
 	internal static class CIDEUtility
 	{
-		public static Dictionary<string, Dictionary<string, List<Word>>> LoadFromCIDEFiles(string path)
+		public static void LoadFromCIDEFiles(string input, string output)
 		{
 			var data = new ConcurrentDictionary<string, Dictionary<string, List<Word>>>();
 			void AddWord(string v)
@@ -27,7 +30,7 @@ namespace gnuciDictionary
 				var def = Regex.Match(v, "<def>(.*)</def>").Groups[1]?.Value;
 				def = StringExtensions.ReplaceAll(def, "<.+?>", "");
 				var plural = Regex.Match(v, "<plw>(.*)</plw>").Groups[1]?.Value;
-				var peek = gnuciDictionary.WordDictionary.GetPeekValue(val);
+				var peek = gnuciDictionary.EnglishDictionary.GetPeekValue(val);
 				if (!data.TryGetValue(peek, out var bucket))
 				{
 					bucket = new Dictionary<string, List<Word>>();
@@ -70,7 +73,7 @@ namespace gnuciDictionary
 				}
 			}
 
-			var files = Directory.GetFiles(path, "CIDE.*");
+			var files = Directory.GetFiles(input, "CIDE.*");
 			var tasks = new Task[files.Length];
 			for (int i = 0; i < files.Length; i++)
 			{
@@ -79,7 +82,39 @@ namespace gnuciDictionary
 				tasks[i].Start();
 			}
 			Task.WaitAll(tasks);
-			return data.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+			var dict = data.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+			if (Directory.Exists(output))
+			{
+				Directory.Delete(output, true);
+			}
+			Directory.CreateDirectory(output);
+			foreach (var kvp in data)
+			{
+				var path = Path.Combine(output, $"dict_{kvp.Key}.dat");
+				var str = JsonConvert.SerializeObject(kvp.Value);
+				try
+				{
+					UnicodeEncoding uniEncode = new UnicodeEncoding();
+					byte[] bytesToCompress = uniEncode.GetBytes(str);
+					var xstr = uniEncode.GetString(bytesToCompress);
+					if (str != xstr)
+					{
+						throw new Exception();
+					}
+					using (FileStream fileToCompress = File.Create(path))
+					{
+						using (GZipStream compressionStream = new GZipStream(fileToCompress, CompressionMode.Compress))
+						{
+							compressionStream.Write(bytesToCompress, 0, bytesToCompress.Length);
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					Logger.Exception(e, $"Failed to serialize to {path}");
+				}
+			}
 		}
 
 	}

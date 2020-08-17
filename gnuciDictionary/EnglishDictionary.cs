@@ -11,12 +11,12 @@ using System.Text.RegularExpressions;
 
 namespace gnuciDictionary
 {
-	public class WordDictionary
+	public static class EnglishDictionary
 	{
 		private const int PEEK_LENGTH = 2;
-		private IDataHandler m_dataHandler;
+		private static IDataHandler m_dataHandler;
 
-		public WordDictionary()
+		static EnglishDictionary()
 		{
 			m_dataHandler = new CompressedDataHandler(); ;
 		}
@@ -40,7 +40,7 @@ namespace gnuciDictionary
 			return format(v.Substring(0, PEEK_LENGTH));
 		}
 		
-		public IEnumerable<Word> Define(string word)
+		public static IEnumerable<Word> Define(string word)
 		{
 			word = word.Trim().ToLowerInvariant();
 			var peek = GetPeekValue(word);

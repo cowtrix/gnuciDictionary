@@ -20,7 +20,7 @@ namespace gnuciDictionary
 			var assembly = Assembly.GetExecutingAssembly();
 			var rscName = $"{nameof(gnuciDictionary)}.data.gzip.dict_{peek}.dat";
 			var rscString = assembly.GetManifestResourceStream(rscName);
-			if(rscString == null)
+			if (rscString == null)
 			{
 				return null;
 			}
@@ -38,44 +38,7 @@ namespace gnuciDictionary
 				}
 				result = uniEncode.GetString(fd.GetBuffer());
 			}
-			
 			return JsonConvert.DeserializeObject<Dictionary<string, List<Word>>>(result);
 		}
-
-		/*public void Save(Dictionary<string, Dictionary<string, List<Word>>> data)
-		{
-			if (Directory.Exists(DataPath))
-			{
-				Directory.Delete(DataPath, true);
-			}
-			Directory.CreateDirectory(DataPath);
-			foreach (var kvp in data)
-			{
-				var path = Path.Combine(DataPath, $"dict_{kvp.Key}.dat");
-				var str = JsonConvert.SerializeObject(kvp.Value);
-				try
-				{
-					UnicodeEncoding uniEncode = new UnicodeEncoding();
-					byte[] bytesToCompress = uniEncode.GetBytes(str);
-					var xstr = uniEncode.GetString(bytesToCompress);
-					if(str != xstr)
-					{
-						throw new Exception();
-					}
-					using (FileStream fileToCompress = File.Create(path))
-					{
-						using (GZipStream compressionStream = new GZipStream(fileToCompress, CompressionMode.Compress))
-						{
-							compressionStream.Write(bytesToCompress, 0, bytesToCompress.Length);
-						}
-					}
-				}
-				catch (Exception e)
-				{
-					Logger.Exception(e, $"Failed to serialize to {path}");
-				}
-			}
-		}*/
-
 	}
 }
