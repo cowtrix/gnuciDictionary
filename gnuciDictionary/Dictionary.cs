@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace gnucide
+namespace gnuciDictionary
 {
 	public class WordDictionary
 	{
@@ -18,7 +18,7 @@ namespace gnucide
 
 		public WordDictionary()
 		{
-			m_dataHandler = new CompressedDataHandler("data\\gzip"); ;
+			m_dataHandler = new CompressedDataHandler(); ;
 		}
 
 		public static string GetPeekValue(string v)

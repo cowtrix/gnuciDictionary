@@ -4,7 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Text;
 
-namespace gnucide
+namespace gnuciDictionary
 {
 	internal class JsonDataHandler : IDataHandler
 	{

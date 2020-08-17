@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace gnucide
+namespace gnuciDictionary
 {
 	internal static class CIDEUtility
 	{
@@ -27,7 +27,7 @@ namespace gnucide
 				var def = Regex.Match(v, "<def>(.*)</def>").Groups[1]?.Value;
 				def = StringExtensions.ReplaceAll(def, "<.+?>", "");
 				var plural = Regex.Match(v, "<plw>(.*)</plw>").Groups[1]?.Value;
-				var peek = gnucide.WordDictionary.GetPeekValue(val);
+				var peek = gnuciDictionary.WordDictionary.GetPeekValue(val);
 				if (!data.TryGetValue(peek, out var bucket))
 				{
 					bucket = new Dictionary<string, List<Word>>();

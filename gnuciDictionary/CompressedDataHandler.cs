@@ -4,28 +4,29 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Reflection;
 using System.Text;
 
-namespace gnucide
+namespace gnuciDictionary
 {
 	internal class CompressedDataHandler : IDataHandler
 	{
-		public string DataPath { get; }
-		public CompressedDataHandler(string dataPath)
+		public CompressedDataHandler()
 		{
-			DataPath = Path.GetFullPath(dataPath); ;
 		}
 
 		public Dictionary<string, List<Word>> Load(string peek)
 		{
-			var dataFilePath = Path.Combine(DataPath, $"dict_{peek}.dat");
-			if (!File.Exists(dataFilePath))
+			var assembly = Assembly.GetExecutingAssembly();
+			var rscName = $"{nameof(gnuciDictionary)}.data.gzip.dict_{peek}.dat";
+			var rscString = assembly.GetManifestResourceStream(rscName);
+			if(rscString == null)
 			{
 				return null;
 			}
 			string result = null;
 			var uniEncode = new UnicodeEncoding();
-			using (var fs = File.OpenRead(dataFilePath))
+			using (var fs = rscString)
 			using (var fd = new MemoryStream())
 			using (var csStream = new GZipStream(fs, CompressionMode.Decompress))
 			{
@@ -41,7 +42,7 @@ namespace gnucide
 			return JsonConvert.DeserializeObject<Dictionary<string, List<Word>>>(result);
 		}
 
-		public void Save(Dictionary<string, Dictionary<string, List<Word>>> data)
+		/*public void Save(Dictionary<string, Dictionary<string, List<Word>>> data)
 		{
 			if (Directory.Exists(DataPath))
 			{
@@ -74,7 +75,7 @@ namespace gnucide
 					Logger.Exception(e, $"Failed to serialize to {path}");
 				}
 			}
-		}
+		}*/
 
 	}
 }

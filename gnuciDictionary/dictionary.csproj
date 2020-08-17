@@ -2,6 +2,20 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
+		<AssemblyName>gnuciDictionary</AssemblyName>
+		<RootNamespace>gnuciDictionary</RootNamespace>
+		<Version>0.0.2</Version>
+		<Authors>cowtrix</Authors>
+		<Product />
+		<Description>A nuget port of the GNU Collaborative International Dictionary of English</Description>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<Copyright>GNU GENERAL PUBLIC LICENSE</Copyright>
+		<PackageProjectUrl>https://github.com/cowtrix/gnuciDictionary</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/cowtrix/gnuciDictionary.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>English, dictionary, define, definitions</PackageTags>
+		<NeutralLanguage>en</NeutralLanguage>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -9,9 +23,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="data/**/*.*">
+		<EmbeddedResource Include="data/**/*.*">
 			<Pack>true</Pack>
-			<PackagePath>contentFiles;content</PackagePath>
 			<IncludeInPackage>true</IncludeInPackage>
 			<CopyToOutput>true</CopyToOutput>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
@@ -19,7 +32,14 @@
 			<copyToOutput>true</copyToOutput>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
-		</Content>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\LICENSE">
+	    <Pack>True</Pack>
+	    <PackagePath></PackagePath>
+	  </None>
 	</ItemGroup>
 
 </Project>

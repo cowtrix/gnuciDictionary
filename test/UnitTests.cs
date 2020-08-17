@@ -1,8 +1,8 @@
-using gnucide;
+using gnuciDictionary;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
-namespace gnucide
+namespace gnuciDictionary
 {
 	[TestClass]
 	public class UnitTests
