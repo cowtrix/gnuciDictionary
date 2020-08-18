@@ -4,16 +4,16 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<AssemblyName>gnuciDictionary</AssemblyName>
 		<RootNamespace>gnuciDictionary</RootNamespace>
-		<Version>0.0.3</Version>
+		<Version>0.0.4</Version>
 		<Authors>cowtrix</Authors>
 		<Product />
-		<Description>A nuget port of the GNU Collaborative International Dictionary of English</Description>
+		<Description>A nuget port of the GNU Collaborative International Dictionary of English. Define thousands of English (US) words completely offline. Includes word types (noun, verb, etc), plurals, and pronunciations.</Description>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<Copyright>GNU GENERAL PUBLIC LICENSE</Copyright>
 		<PackageProjectUrl>https://github.com/cowtrix/gnuciDictionary</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/cowtrix/gnuciDictionary.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<PackageTags>English, dictionary, define, definitions</PackageTags>
+		<PackageTags>English, dictionary, define, definitions, words, plurals, pronunciations</PackageTags>
 		<NeutralLanguage>en</NeutralLanguage>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
@@ -24,14 +24,7 @@
 
 	<ItemGroup>
 		<EmbeddedResource Include="data/**/*.*">
-			<Pack>true</Pack>
 			<IncludeInPackage>true</IncludeInPackage>
-			<CopyToOutput>true</CopyToOutput>
-			<PackageCopyToOutput>true</PackageCopyToOutput>
-			<BuildAction>Content</BuildAction>
-			<copyToOutput>true</copyToOutput>
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
 		</EmbeddedResource>
 	</ItemGroup>
 
