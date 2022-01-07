@@ -4,7 +4,7 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<AssemblyName>gnuciDictionary</AssemblyName>
 		<RootNamespace>gnuciDictionary</RootNamespace>
-		<Version>0.0.5</Version>
+		<Version>0.0.8</Version>
 		<Authors>cowtrix</Authors>
 		<Product />
 		<Description>A nuget port of the GNU Collaborative International Dictionary of English. Define thousands of English (US) words completely offline. Includes word types (noun, verb, etc), plurals, and pronunciations.</Description>
