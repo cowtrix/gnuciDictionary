@@ -39,5 +39,16 @@ namespace gnuciDictionary
 				File.WriteAllText(path, str);
 			}
 		}
+
+		public IEnumerable<string> GetPeekValues()
+		{
+			var files = Directory.GetFiles(DataPath, "*.json");
+			foreach(var f in files)
+			{
+				var fName = Path.GetFileNameWithoutExtension(f)
+					.Substring("dict_".Length);
+				yield return fName;
+			}
+		}
 	}
 }

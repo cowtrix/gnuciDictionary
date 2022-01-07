@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -13,6 +14,17 @@ namespace gnuciDictionary
 	{
 		public CompressedDataHandler()
 		{
+		}
+
+		public IEnumerable<string> GetPeekValues()
+		{
+			var assembly = Assembly.GetExecutingAssembly();
+			var resources = assembly.GetManifestResourceNames()
+				.Where(r => r.EndsWith(".dat"));
+			foreach(var r in resources)
+			{
+				yield return r.Substring(r.Length - 6, 2);
+			}
 		}
 
 		public Dictionary<string, List<Word>> Load(string peek)

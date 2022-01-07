@@ -39,13 +39,28 @@ namespace gnuciDictionary
 			}
 			return format(v.Substring(0, PEEK_LENGTH));
 		}
-		
+
+		public static IEnumerable<Word> GetAllWords()
+		{
+			foreach (var peek in m_dataHandler.GetPeekValues())
+			{
+				var data = m_dataHandler.Load(peek);
+				foreach (var val in data)
+				{
+					foreach (var word in val.Value)
+					{
+						yield return word;
+					}
+				}
+			}
+		}
+
 		public static IEnumerable<Word> Define(string word)
 		{
 			word = word.Trim().ToLowerInvariant();
 			var peek = GetPeekValue(word);
 			var data = m_dataHandler.Load(peek);
-			if(data == null || !data.TryGetValue(word, out var list))
+			if (data == null || !data.TryGetValue(word, out var list))
 			{
 				return null;
 			}

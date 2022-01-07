@@ -19,5 +19,12 @@ namespace gnuciDictionary
 			Assert.IsTrue(definitions.Any(w => w.Definition.StartsWith(def)), 
 				$"Incorrect definition: {string.Join("\n", definitions.Select(w => w.Definition))}");
 		}
+
+		[TestMethod]
+		public void CanEnumerateValues()
+		{
+			var allValues = EnglishDictionary.GetAllWords().ToList();
+			Assert.IsTrue(allValues.Count > 0);
+		}
 	}
 }
