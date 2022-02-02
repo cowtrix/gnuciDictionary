@@ -1,5 +1,6 @@
 using gnuciDictionary;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace gnuciDictionary
@@ -25,6 +26,52 @@ namespace gnuciDictionary
 		{
 			var allValues = EnglishDictionary.GetAllWords().ToList();
 			Assert.IsTrue(allValues.Count > 0);
+
+			var all5Words = allValues
+				.Select(w => w.Value)
+				.Distinct()
+				.Where(w => w.Length == 5)
+				.ToList();
+
+			var charValues = new Dictionary<char, int>();
+			foreach(var w in all5Words)
+			{
+				foreach(char c in w)
+				{
+					if(!charValues.TryGetValue(c, out var count))
+					{
+						charValues[c] = 1;
+					}
+					else
+					{
+						charValues[c] = count + 1;
+					}
+				}
+			}
+
+			var charScores = new Dictionary<string, int>();
+			foreach(var w in all5Words)
+			{
+				var wordScore = 0;
+				var history = new HashSet<char>();
+				for (int i = 0; i < w.Length; i++)
+				{
+					char c = w[i];
+					var charScore = charValues[c];
+					if(!history.Contains(c))
+						wordScore += charScore;
+					else
+					{
+						wordScore -= charScore;
+					}
+					history.Add(c);
+				}
+				charScores[w] = wordScore;
+			}
+
+			var best = charScores.OrderBy(x => x.Value)
+				.ToList();
+
 		}
 	}
 }
